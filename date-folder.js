@@ -5,7 +5,20 @@ function run(input, parameters) {
   const currentApp = Application.currentApplication();
 	currentApp.includeStandardAdditions = true;
 	
-	const currentTarget = finder.finderWindows[0].target().url();
+  let currentTarget = '';
+  const finderWindows = finder.finderWindows();
+  if(finderWindows.length){
+    currentTarget = finder.finderWindows[0].target().url();
+  }
+  // default to Desktop if no Finder window or path unusable
+  currentTarget = currentTarget || currentApp.doShellScript(`osascript -e 'tell app "finder" to get posix path of (get desktop as alias)'`);
+  // currentApp.displayAlert('There are no Finder windows open.', {
+  //   message: 'First open a Finder window where you want the new folder created.',
+  //   as: 'critical',
+  //   buttons: ['Duh!']
+  // });
+  // return -1;
+  debugger
 	const [year, month, day] = (new Date()).toISOString().split('T')[0].split('-');
 	
 	const today = `${year}-${month}-${day}`;
