@@ -18,7 +18,6 @@ function run(input, parameters) {
   //   buttons: ['Duh!']
   // });
   // return -1;
-  debugger
 	const [year, month, day] = (new Date()).toISOString().split('T')[0].split('-');
 	
 	const today = `${year}-${month}-${day}`;
